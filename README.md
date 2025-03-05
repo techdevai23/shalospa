@@ -1,5 +1,4 @@
 
-
 ![Github Actions](https://github.com/remast/gobuff_realworld_example_app/workflows/CI%20Build/badge.svg)
 
 # ![RealWorld Example App](logo.png)
@@ -14,7 +13,9 @@ HEMOS BASADO NUESTRA TAREA EN TRABAJAR CON ESTA APLICACIÓN. LOS PASOS PRINCIPAL
 # Proyecto Shalospa
 
 ## Selección de una aplicación web  
-En nuestro caso hemos creado el repositorio [`techdevai23/shalospa`](https://github.com/techdevai23/shalospa), el cual es un **fork** de [`remast/gobuff_realworld_example_app`](https://github.com/remast/gobuff_r>
+
+En nuestro caso hemos creado el repositorio [`techdevai23/shalospa`](https://github.com/techdevai23/shalospa), el cual es un **fork** de [`remast/gobuff_realworld_example_app`](https://github.com/remast/gobuff_realworld_example_app).  
+
 Este proyecto es una implementación de una aplicación real utilizando el framework **Buffalo**, alineada con las especificaciones de la API de **RealWorld**.
 
 ## Gestión del código en GitHub  
