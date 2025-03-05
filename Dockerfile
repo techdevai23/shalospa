@@ -1,3 +1,4 @@
+#nuevo docker
 # Etapa 1: Construcción de la aplicación
 FROM golang:1.19 as builder
 
