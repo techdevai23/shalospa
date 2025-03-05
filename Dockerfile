@@ -1,34 +1,35 @@
-# This is a multi-stage Dockerfile and requires >= Docker 17.05
-# https://docs.docker.com/engine/userguide/eng-image/multistage-build/
-FROM gobuffalo/buffalo:v0.18.1 as builder
+# Etapa 1: Construcción de la aplicación
+FROM golang:1.19 as builder
 
-RUN mkdir -p $GOPATH/src/gobuff_realworld_example_app
-WORKDIR $GOPATH/src/gobuff_realworld_example_app
+# Establecer el directorio de trabajo dentro del contenedor
+WORKDIR /app
 
-ADD . .
-ENV GO111MODULES=on
-RUN go get ./...
+# Copiar archivos del repositorio al contenedor
+COPY . .
+
+# Instalar Buffalo CLI
+RUN go install github.com/gobuffalo/cli/cmd/buffalo@latest
+
+# Compilar la aplicación Buffalo
 RUN buffalo build --static -o /bin/app
 
-FROM alpine
-RUN apk add --no-cache bash
-RUN apk add --no-cache ca-certificates
+# Etapa 2: Imagen final
+FROM alpine:latest
 
-WORKDIR /bin/
+# Instalar dependencias necesarias
+RUN apk --no-cache add ca-certificates
 
+# Crear directorio para la aplicación
+RUN mkdir /app
+
+# Establecer el directorio de trabajo
+WORKDIR /app
+
+# Copiar la aplicación compilada desde la etapa de construcción
 COPY --from=builder /bin/app .
 
-# Uncomment to run the binary in "production" mode:
-# ENV GO_ENV=production
-
-# Bind the app to 0.0.0.0 so it can be seen from outside the container
-ENV ADDR=0.0.0.0
-
+# Exponer el puerto en el que la aplicación se ejecutará
 EXPOSE 3000
 
-## Add the wait script to the image
-ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.9.0/wait /wait
-RUN chmod +x /wait
-
-# Run the migrations before running the binary:
-CMD /wait; /bin/app migrate; /bin/app
+# Comando para ejecutar la aplicación
+CMD ["./app", "serve", "--production"]
