@@ -21,7 +21,7 @@ RUN go install github.com/gobuffalo/cli/cmd/buffalo@latest && \
     export PATH=$PATH:$(go env GOPATH)/bin
 
 # Compilar la aplicación Buffalo
-RUN buffalo build --static -o /bin/app
+RUN buffalo build --static -o /bin/app -w .
 
 
 # Etapa 2: Imagen final
